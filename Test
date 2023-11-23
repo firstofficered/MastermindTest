@@ -1,0 +1,445 @@
+Public Class Form1
+    Public Property TestText As Object
+    Public Property TargetNumber As Array
+    Public Property TargetNumberDisplay
+    Public Property GuessLine
+    Public Property GuessRow As Integer()
+    Public Property HintIcons As Button()
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ResetGame()
+        StartGame()
+    End Sub
+    Private Sub btnGuessMe_Click(sender As Object, e As EventArgs) Handles btnGuessMe.Click
+        If ZeroChecker() = True Then
+            Dim PassCheck = NumberChecker(TargetNumberDisplay)
+            If PassCheck = True Then
+                WinGame()
+            Else HintGiver()
+                GuessLine = Int(GuessLine + 1)
+                LockSystem()
+            End If
+            lblCodeTest.Text = "----"
+        Else
+            lblCodeTest.Text = "Invalid Number. Please make sure any 0's are changed"
+        End If
+    End Sub
+    Private Function NumberChecker(TargetNumberDisplay As String) As Boolean
+        Dim TTM As Integer = Val(TargetNumberDisplay)
+        If GuessLine = 1 Then
+            If TTM = (spinR1S1.Value & spinR1S2.Value & spinR1S3.Value & spinR1S4.Value) Then
+                Return True
+            Else
+                Return False
+            End If
+        ElseIf GuessLine = 2 Then
+            If TTM = (spinR2S1.Value & spinR2S2.Value & spinR2S3.Value & spinR2S4.Value) Then
+                Return True
+            Else
+                Return False
+            End If
+        ElseIf GuessLine = 3 Then
+            If TTM = (spinR3S1.Value & spinR3S2.Value & spinR3S3.Value & spinR3S4.Value) Then
+                Return True
+            Else
+                Return False
+            End If
+        ElseIf GuessLine = 4 Then
+            If TTM = (spinR4S1.Value & spinR4S2.Value & spinR4S3.Value & spinR4S4.Value) Then
+                Return True
+            Else
+                Return False
+            End If
+        ElseIf GuessLine = 5 Then
+            If TTM = (spinR5S1.Value & spinR5S2.Value & spinR5S3.Value & spinR5S4.Value) Then
+                Return True
+            Else
+                Return False
+            End If
+        End If
+    End Function
+    Public Function StartGame()
+        TargetNumber = RandomFinalNumber()
+        'TargetNumber = {9, 3, 3, 1}
+        TargetNumberDisplay = (TargetNumber(0) & TargetNumber(1) & TargetNumber(2) & TargetNumber(3))
+        'lblCodeTest.Text = TargetNumberDisplay
+        lblCodeTest.Text = "----"
+        GuessLine = 1
+        LockSystem()
+        btnGuessMe.Enabled = True
+    End Function
+    Private Function LockSystem()
+        If GuessLine = 1 Then
+            spinR1S4.Enabled = 1
+            spinR1S3.Enabled = 1
+            spinR1S2.Enabled = 1
+            spinR1S1.Enabled = 1
+        ElseIf GuessLine = 2 Then
+            spinR1S4.Enabled = 0
+            spinR1S3.Enabled = 0
+            spinR1S2.Enabled = 0
+            spinR1S1.Enabled = 0
+            spinR2S3.Enabled = 1
+            spinR2S4.Enabled = 1
+            spinR2S2.Enabled = 1
+            spinR2S1.Enabled = 1
+        ElseIf GuessLine = 3 Then
+            spinR2S3.Enabled = 0
+            spinR2S4.Enabled = 0
+            spinR2S2.Enabled = 0
+            spinR2S1.Enabled = 0
+            spinR3S2.Enabled = 1
+            spinR3S4.Enabled = 1
+            spinR3S3.Enabled = 1
+            spinR3S1.Enabled = 1
+        ElseIf GuessLine = 4 Then
+            spinR3S2.Enabled = 0
+            spinR3S4.Enabled = 0
+            spinR3S3.Enabled = 0
+            spinR3S1.Enabled = 0
+            spinR4S2.Enabled = 1
+            spinR4S3.Enabled = 1
+            spinR4S4.Enabled = 1
+            spinR4S1.Enabled = 1
+        ElseIf GuessLine = 5 Then
+            spinR4S2.Enabled = 0
+            spinR4S3.Enabled = 0
+            spinR4S4.Enabled = 0
+            spinR4S1.Enabled = 0
+            spinR5S2.Enabled = 1
+            spinR5S3.Enabled = 1
+            spinR5S4.Enabled = 1
+            spinR5S1.Enabled = 1
+        ElseIf GuessLine = 6 Then
+            LoseGame()
+        Else
+        End If
+    End Function
+    Private Function WinGame()
+        spinR1S4.Enabled = 0
+        spinR1S3.Enabled = 0
+        spinR1S2.Enabled = 0
+        spinR1S1.Enabled = 0
+        spinR2S3.Enabled = 0
+        spinR2S4.Enabled = 0
+        spinR2S2.Enabled = 0
+        spinR2S1.Enabled = 0
+        spinR3S2.Enabled = 0
+        spinR3S4.Enabled = 0
+        spinR3S3.Enabled = 0
+        spinR3S1.Enabled = 0
+        spinR4S2.Enabled = 0
+        spinR4S3.Enabled = 0
+        spinR4S4.Enabled = 0
+        spinR4S1.Enabled = 0
+        spinR5S2.Enabled = 0
+        spinR5S3.Enabled = 0
+        spinR5S4.Enabled = 0
+        spinR5S1.Enabled = 0
+        btnGuessMe.Enabled = False
+        lblCodeTest.Text = "YOU WIN!!!"
+    End Function
+    Private Function LoseGame()
+        spinR1S4.Enabled = 0
+        spinR1S3.Enabled = 0
+        spinR1S2.Enabled = 0
+        spinR1S1.Enabled = 0
+        spinR2S3.Enabled = 0
+        spinR2S4.Enabled = 0
+        spinR2S2.Enabled = 0
+        spinR2S1.Enabled = 0
+        spinR3S2.Enabled = 0
+        spinR3S4.Enabled = 0
+        spinR3S3.Enabled = 0
+        spinR3S1.Enabled = 0
+        spinR4S2.Enabled = 0
+        spinR4S3.Enabled = 0
+        spinR4S4.Enabled = 0
+        spinR4S1.Enabled = 0
+        spinR5S2.Enabled = 0
+        spinR5S3.Enabled = 0
+        spinR5S4.Enabled = 0
+        spinR5S1.Enabled = 0
+        btnGuessMe.Enabled = False
+        lblCodeTest.Text = "You Lose. The actual number was " & TargetNumberDisplay & ". Better luck next time."
+    End Function
+    Private Function ResetGame()
+        GuessLine = 0
+        spinR1S4.Enabled = 0
+        spinR1S3.Enabled = 0
+        spinR1S2.Enabled = 0
+        spinR1S1.Enabled = 0
+        spinR2S3.Enabled = 0
+        spinR2S4.Enabled = 0
+        spinR2S2.Enabled = 0
+        spinR2S1.Enabled = 0
+        spinR3S2.Enabled = 0
+        spinR3S4.Enabled = 0
+        spinR3S3.Enabled = 0
+        spinR3S1.Enabled = 0
+        spinR4S2.Enabled = 0
+        spinR4S3.Enabled = 0
+        spinR4S4.Enabled = 0
+        spinR4S1.Enabled = 0
+        spinR5S2.Enabled = 0
+        spinR5S3.Enabled = 0
+        spinR5S4.Enabled = 0
+        spinR5S1.Enabled = 0
+        spinR1S4.Text = 0
+        spinR1S3.Text = 0
+        spinR1S2.Text = 0
+        spinR1S1.Text = 0
+        spinR2S3.Text = 0
+        spinR2S4.Text = 0
+        spinR2S2.Text = 0
+        spinR2S1.Text = 0
+        spinR3S2.Text = 0
+        spinR3S4.Text = 0
+        spinR3S3.Text = 0
+        spinR3S1.Text = 0
+        spinR4S2.Text = 0
+        spinR4S3.Text = 0
+        spinR4S4.Text = 0
+        spinR4S1.Text = 0
+        spinR5S2.Text = 0
+        spinR5S3.Text = 0
+        spinR5S4.Text = 0
+        spinR5S1.Text = 0
+        HintClearing()
+    End Function
+    Private Sub btnGiveUp_Click(sender As Object, e As EventArgs) Handles btnGiveUp.Click
+        ResetGame()
+        StartGame()
+    End Sub
+    Private Function HintGiver()
+        Dim HintingNumbers As Integer() = {TargetNumber(0), TargetNumber(1), TargetNumber(2), TargetNumber(3)}
+        'Dim GuessRow As Integer()
+        Dim CorrectQuantity As Integer = 0
+        Dim CorrectNumber As Integer = 0
+        If GuessLine = 1 Then
+            GuessRow = {spinR1S1.Value, spinR1S2.Value, spinR1S3.Value, spinR1S4.Value}
+            HintIcons = {HintIndicator1R1, HintIndicator2R1, HintIndicator3R1, HintIndicator4R1}
+        ElseIf GuessLine = 2 Then
+            GuessRow = {spinR2S1.Value, spinR2S2.Value, spinR2S3.Value, spinR2S4.Value}
+            HintIcons = {HintIndicator1R2, HintIndicator2R2, HintIndicator3R2, HintIndicator4R2}
+        ElseIf GuessLine = 3 Then
+            GuessRow = {spinR3S1.Value, spinR3S2.Value, spinR3S3.Value, spinR3S4.Value}
+            HintIcons = {HintIndicator1R3, HintIndicator2R3, HintIndicator3R3, HintIndicator4R3}
+        ElseIf GuessLine = 4 Then
+            GuessRow = {spinR4S1.Value, spinR4S2.Value, spinR4S3.Value, spinR4S4.Value}
+            HintIcons = {HintIndicator1R4, HintIndicator2R4, HintIndicator3R4, HintIndicator4R4}
+        ElseIf GuessLine = 5 Then
+            GuessRow = {spinR5S1.Value, spinR5S2.Value, spinR5S3.Value, spinR5S4.Value}
+            HintIcons = {HintIndicator1R5, HintIndicator2R5, HintIndicator3R5, HintIndicator4R5}
+        End If
+
+        If GuessNumberScanner(1) > 0 And TargetNumberScanner(1) > 0 Then
+            If GuessNumberScanner(1) >= TargetNumberScanner(1) Then
+                CorrectQuantity = (CorrectQuantity + TargetNumberScanner(1))
+            Else
+                CorrectQuantity = (CorrectQuantity + GuessNumberScanner(1))
+            End If
+        End If
+        If GuessNumberScanner(2) > 0 And TargetNumberScanner(2) > 0 Then
+            If GuessNumberScanner(2) >= TargetNumberScanner(2) Then
+                CorrectQuantity = (CorrectQuantity + TargetNumberScanner(2))
+            Else
+                CorrectQuantity = (CorrectQuantity + GuessNumberScanner(2))
+            End If
+        End If
+        If GuessNumberScanner(3) > 0 And TargetNumberScanner(3) > 0 Then
+            If GuessNumberScanner(3) >= TargetNumberScanner(3) Then
+                CorrectQuantity = (CorrectQuantity + TargetNumberScanner(3))
+            Else
+                CorrectQuantity = (CorrectQuantity + GuessNumberScanner(3))
+            End If
+        End If
+        If GuessNumberScanner(4) > 0 And TargetNumberScanner(4) > 0 Then
+            If GuessNumberScanner(4) >= TargetNumberScanner(4) Then
+                CorrectQuantity = (CorrectQuantity + TargetNumberScanner(4))
+            Else
+                CorrectQuantity = (CorrectQuantity + GuessNumberScanner(4))
+            End If
+        End If
+        'If GuessNumberScanner(5) > 0 And TargetNumberScanner(5) > 0 Then
+        '    If GuessNumberScanner(5) >= TargetNumberScanner(5) Then
+        '        CorrectQuantity = (CorrectQuantity + TargetNumberScanner(5))
+        '    Else
+        '        CorrectQuantity = (CorrectQuantity + GuessNumberScanner(5))
+        '    End If
+        'End If
+        'If GuessNumberScanner(6) > 0 And TargetNumberScanner(6) > 0 Then
+        '    If GuessNumberScanner(6) >= TargetNumberScanner(6) Then
+        '        CorrectQuantity = (CorrectQuantity + TargetNumberScanner(6))
+        '    Else
+        '        CorrectQuantity = (CorrectQuantity + GuessNumberScanner(6))
+        '    End If
+        'End If
+        'If GuessNumberScanner(7) > 0 And TargetNumberScanner(7) > 0 Then
+        '    If GuessNumberScanner(7) >= TargetNumberScanner(7) Then
+        '        CorrectQuantity = (CorrectQuantity + TargetNumberScanner(7))
+        '    Else
+        '        CorrectQuantity = (CorrectQuantity + GuessNumberScanner(7))
+        '    End If
+        'End If
+        'If GuessNumberScanner(8) > 0 And TargetNumberScanner(8) > 0 Then
+        '    If GuessNumberScanner(8) >= TargetNumberScanner(8) Then
+        '        CorrectQuantity = (CorrectQuantity + TargetNumberScanner(8))
+        '    Else
+        '        CorrectQuantity = (CorrectQuantity + GuessNumberScanner(8))
+        '    End If
+        'End If
+        'If GuessNumberScanner(9) > 0 And TargetNumberScanner(9) > 0 Then
+        '    If GuessNumberScanner(9) >= TargetNumberScanner(9) Then
+        '        CorrectQuantity = (CorrectQuantity + TargetNumberScanner(9))
+        '    Else
+        '        CorrectQuantity = (CorrectQuantity + GuessNumberScanner(9))
+        '    End If
+        'End If
+        'If GuessNumberScanner(0) > 0 And TargetNumberScanner(0) > 0 Then
+        '    If GuessNumberScanner(0) >= TargetNumberScanner(0) Then
+        '        CorrectQuantity = (CorrectQuantity + TargetNumberScanner(0))
+        '    Else
+        '        CorrectQuantity = (CorrectQuantity + GuessNumberScanner(0))
+        '    End If
+        'End If
+        If GuessRow(0) = TargetNumber(0) Then
+            CorrectNumber = (CorrectNumber + 1)
+        End If
+        If GuessRow(1) = TargetNumber(1) Then
+            CorrectNumber = (CorrectNumber + 1)
+        End If
+        If GuessRow(2) = TargetNumber(2) Then
+            CorrectNumber = (CorrectNumber + 1)
+        End If
+        If GuessRow(3) = TargetNumber(3) Then
+            CorrectNumber = (CorrectNumber + 1)
+        End If
+        If CorrectQuantity = 4 Then
+            HintIcons(3).BackColor = Color.Red
+            HintIcons(2).BackColor = Color.Red
+            HintIcons(1).BackColor = Color.Red
+            HintIcons(0).BackColor = Color.Red
+        Else
+            HintIcons(3).BackColor = Color.Black
+            If CorrectQuantity = 3 Then
+                HintIcons(2).BackColor = Color.Red
+                HintIcons(1).BackColor = Color.Red
+                HintIcons(0).BackColor = Color.Red
+            Else
+                HintIcons(2).BackColor = Color.Black
+                If CorrectQuantity = 2 Then
+                    HintIcons(1).BackColor = Color.Red
+                    HintIcons(0).BackColor = Color.Red
+                Else
+                    HintIcons(1).BackColor = Color.Black
+                    If CorrectQuantity = 1 Then
+                        HintIcons(0).BackColor = Color.Red
+                    Else
+                        HintIcons(0).BackColor = Color.Black
+                    End If
+                End If
+            End If
+        End If
+        If CorrectNumber = 4 Then
+            HintIcons(3).BackColor = Color.Green
+            HintIcons(2).BackColor = Color.Green
+            HintIcons(1).BackColor = Color.Green
+            HintIcons(0).BackColor = Color.Green
+        ElseIf CorrectNumber = 3 Then
+            HintIcons(2).BackColor = Color.Green
+            HintIcons(1).BackColor = Color.Green
+            HintIcons(0).BackColor = Color.Green
+        ElseIf CorrectNumber = 2 Then
+            HintIcons(1).BackColor = Color.Green
+            HintIcons(0).BackColor = Color.Green
+        ElseIf CorrectNumber = 1 Then
+            HintIcons(0).BackColor = Color.Green
+        End If
+    End Function
+    Private Function RandomFinalNumber() As Array
+        Randomize()
+        Dim TargetNumber(4) As Integer
+        TargetNumber(0) = CInt(Int(4 * Rnd() + 1))
+        TargetNumber(1) = CInt(Int(4 * Rnd() + 1))
+        TargetNumber(2) = CInt(Int(4 * Rnd() + 1))
+        TargetNumber(3) = CInt(Int(4 * Rnd() + 1))
+        Return TargetNumber
+    End Function
+    Private Function TargetNumberScanner(ScanNumber As Integer)
+        'Dim ScanNumber
+        Dim TScanResult As Integer = 0
+        If TargetNumber(0) = ScanNumber Then
+            TScanResult = (TScanResult + 1)
+        End If
+        If TargetNumber(1) = ScanNumber Then
+            TScanResult = (TScanResult + 1)
+        End If
+        If TargetNumber(2) = ScanNumber Then
+            TScanResult = (TScanResult + 1)
+        End If
+        If TargetNumber(3) = ScanNumber Then
+            TScanResult = (TScanResult + 1)
+        End If
+        '        If TScanResult = 0 Then
+        '       TScanResult = 9999
+        '      End If
+        Return TScanResult
+    End Function
+    Private Function GuessNumberScanner(ScanNumber As Integer)
+        Dim GScanResult As Integer = 0
+        If GuessRow(0) = ScanNumber Then
+            GScanResult = (GScanResult + 1)
+        End If
+        If GuessRow(1) = ScanNumber Then
+            GScanResult = (GScanResult + 1)
+        End If
+        If GuessRow(2) = ScanNumber Then
+            GScanResult = (GScanResult + 1)
+        End If
+        If GuessRow(3) = ScanNumber Then
+            GScanResult = (GScanResult + 1)
+        End If
+        Return GScanResult
+    End Function
+    Private Function HintClearing()
+        Dim HintIndicators As Button() = {HintIndicator1R1, HintIndicator2R1, HintIndicator3R1, HintIndicator4R1, HintIndicator1R2, HintIndicator2R2, HintIndicator3R2, HintIndicator4R2, HintIndicator1R3, HintIndicator2R3, HintIndicator3R3, HintIndicator4R3, HintIndicator1R4, HintIndicator2R4, HintIndicator3R4, HintIndicator4R4, HintIndicator1R5, HintIndicator2R5, HintIndicator3R5, HintIndicator4R5}
+        'Dim CountValue = HintIndicators.Length
+        For CountValue = 0 To (HintIndicators.Length - 1)
+            HintIndicators(CountValue).BackColor = Color.Black
+        Next
+    End Function
+    Private Function ZeroChecker() As Boolean
+        If GuessLine = 1 Then
+            If spinR1S1.Value = 0 Or spinR1S2.Value = 0 Or spinR1S3.Value = 0 Or spinR1S4.Value = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        ElseIf GuessLine = 2 Then
+            If spinR1S1.Value = 0 Or spinR1S2.Value = 0 Or spinR1S3.Value = 0 Or spinR1S4.Value = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        ElseIf GuessLine = 3 Then
+            If spinR1S1.Value = 0 Or spinR1S2.Value = 0 Or spinR1S3.Value = 0 Or spinR1S4.Value = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        ElseIf GuessLine = 4 Then
+            If spinR1S1.Value = 0 Or spinR1S2.Value = 0 Or spinR1S3.Value = 0 Or spinR1S4.Value = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        ElseIf GuessLine = 5 Then
+            If spinR1S1.Value = 0 Or spinR1S2.Value = 0 Or spinR1S3.Value = 0 Or spinR1S4.Value = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        End If
+    End Function
+End Class
